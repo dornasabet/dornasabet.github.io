@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dorna Sabet — Resume</title>
+  <meta name="description" content="Resume of Dorna Sabet — Computer Vision & Biomechanics" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#05060a; --panel:#0d0f16; --text:#e9ecf1; --muted:#a8adbb; --brand:#7bd6ff; --chip:#121523; --stroke:rgba(255,255,255,0.12);
+      --accent:#80ffea; --link:#8ad8ff; --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    [data-theme="light"]{ --bg:#f8fbff; --panel:#ffffff; --text:#0e1116; --muted:#5b616e; --brand:#0677ff; --chip:#f1f5fb; --stroke:rgba(0,0,0,0.08); --link:#005ef0; --shadow:0 10px 30px rgba(0,0,0,.08)}
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden}
+    .bgfx{position:fixed; inset:0; pointer-events:none; z-index:-1;}
+    .blob{position:absolute; filter:blur(60px); opacity:.35; mix-blend:screen}
+    .b1{width:52vmax; height:52vmax; left:-10vmax; top:-10vmax; background:radial-gradient(circle at 30% 30%, #6cf 0, transparent 55%)}
+    .b2{width:50vmax; height:50vmax; right:-15vmax; top:10vmax; background:radial-gradient(circle at 70% 30%, #f0f 0, transparent 60%)}
+    .b3{width:48vmax; height:48vmax; left:10vmax; bottom:-20vmax; background:radial-gradient(circle at 40% 60%, #0ff 0, transparent 60%)}
+
+    /* Layout */
+    .container{max-width:1100px; margin:32px auto 80px; padding:0 22px}
+    .nav{position:sticky; top:0; z-index:20; backdrop-filter:saturate(140%) blur(10px); background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0)); border-bottom:1px solid var(--stroke)}
+    .nav-inner{max-width:1100px; margin:0 auto; padding:10px 22px; display:flex; align-items:center; gap:14px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+    .badge{font-family:"JetBrains Mono",monospace; font-size:11px; padding:2px 8px; border:1px solid var(--stroke); border-radius:999px; background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0));}
+    .spacer{flex:1}
+    .nav a{color:var(--text); text-decoration:none; opacity:.85}
+    .nav a:hover{opacity:1}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid var(--stroke); background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0)); box-shadow:var(--shadow); font-weight:600}
+
+    .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:center; margin-top:26px}
+    @media (max-width:900px){.hero{grid-template-columns:1fr;}}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02)); border:1px solid var(--stroke); border-radius:22px; padding:28px; box-shadow:var(--shadow)}
+    .title{font-size:40px; line-height:1.1; font-weight:800; letter-spacing:.2px; margin:0}
+    .subtitle{font-size:16px; color:var(--muted); margin-top:8px}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
+    .chip{background:var(--chip); border:1px solid var(--stroke); padding:8px 12px; border-radius:999px; font-size:12px}
+    .cta{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap}
+    .avatar{width:120px; height:120px; border-radius:18px; overflow:hidden; border:1px solid var(--stroke); box-shadow:var(--shadow)}
+    .avatar img{width:100%; height:100%; object-fit:cover}
+
+    .sections{display:grid; grid-template-columns:1.2fr .8fr; gap:24px; margin-top:24px}
+    @media (max-width:900px){.sections{grid-template-columns:1fr}}
+    h2{font-size:20px; margin:0 0 12px; letter-spacing:.3px; position:relative}
+    h2 .underline{position:absolute; left:0; bottom:-6px; height:3px; width:72px; background:linear-gradient(90deg,var(--brand),transparent); border-radius:3px}
+
+    .item{padding:14px 0; border-bottom:1px dashed var(--stroke)}
+    .item:last-child{border-bottom:0}
+    .row{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .role{font-weight:700}
+    .meta{color:var(--muted); font-size:13px}
+    ul{margin:8px 0 0 20px}
+    li{margin-bottom:6px}
+
+    .timeline{position:relative}
+    .timeline::before{content:""; position:absolute; left:10px; top:6px; bottom:6px; width:2px; background:linear-gradient(180deg,var(--brand),transparent)}
+    .tick{display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:start; margin-bottom:12px}
+    .dot{width:10px; height:10px; margin-top:6px; border-radius:50%; background:var(--brand); box-shadow:0 0 0 4px rgba(123,214,255,.15)}
+
+    .skillgrid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+    .skill{display:flex; justify-content:space-between; align-items:center; border:1px solid var(--stroke); background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0)); border-radius:12px; padding:10px 12px; font-size:14px}
+    .bar{height:8px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; width:52%}
+    .bar > span{display:block; height:100%; width:0; background:linear-gradient(90deg, var(--brand), var(--accent)); border-radius:999px; transition:width 1.2s ease}
+
+    .tags{display:flex; flex-wrap:wrap; gap:8px}
+    .tag{font-family:"JetBrains Mono",monospace; font-size:11px; padding:4px 8px; border:1px solid var(--stroke); border-radius:999px}
+
+    .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+    @media (max-width:800px){.gallery{grid-template-columns:1fr 1fr}}
+    .shot{position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--stroke)}
+    .shot img{width:100%; height:180px; object-fit:cover; display:block; filter:saturate(1.05)}
+    .shot .cap{position:absolute; inset:auto 0 0 0; padding:10px 12px; font-size:12px; background:linear-gradient(180deg,transparent,rgba(0,0,0,.55));}
+
+    .footer{margin-top:30px; text-align:center; color:var(--muted); font-size:12px}
+    a{color:var(--link); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* fade/slide reveal */
+    .reveal{opacity:0; transform:translateY(8px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* Print */
+    @media print{ .nav,.bgfx,.cta,.gallery{display:none} .container{margin:0; padding:0} .card{box-shadow:none; border:0} .title{font-size:30px} }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org/","@type":"Person","name":"Dorna Sabet","jobTitle":"MSc Student — Mechanical Engineering","affiliation":{"@type":"CollegeOrUniversity","name":"University of Alberta"},"url":"https://dornasabet.github.io","sameAs":["https://github.com/dornasabet","https://www.linkedin.com/in/dornasabet"]}
+  </script>
+</head>
+<body>
+  <div class="bgfx">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand">Dorna Sabet <span class="badge">CV/AI • Biomechanics</span></div>
+      <div class="spacer"></div>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+      <button id="themeToggle" class="btn" aria-label="Toggle theme">🌗</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- HERO -->
+    <section class="hero card reveal">
+      <div>
+        <h1 class="title">Computer Vision × Biomechanics<br/>for Human Motion</h1>
+        <p class="subtitle">MSc @ University of Alberta. Markerless motion capture, COP/COM estimation, and model benchmarking.</p>
+        <div class="chips">
+          <span class="chip">Python</span>
+          <span class="chip">PyTorch</span>
+          <span class="chip">OpenCV</span>
+          <span class="chip">MMPose</span>
+          <span class="chip">Signal Processing</span>
+          <span class="chip">Statistics (KW/Wilcoxon/ICC)</span>
+        </div>
+        <div class="cta">
+          <a class="btn" href="mailto:you@example.com">Email</a>
+          <a class="btn" href="#" id="downloadPdf">Download PDF</a>
+          <a class="btn" href="https://github.com/yourhandle" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/yourhandle" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      <div style="justify-self:end; display:flex; gap:16px; align-items:center;">
+        <div class="avatar"><img src="https://avatars.githubusercontent.com/u/000000?v=4" alt="Avatar"/></div>
+        <div class="tags">
+          <span class="tag">Edmonton, AB</span>
+          <span class="tag">Open to roles</span>
+          <span class="tag">Research & Dev</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="sections">
+      <main>
+        <!-- EXPERIENCE -->
+        <section id="experience" class="card reveal">
+          <h2>Experience <span class="underline"></span></h2>
+          <div class="item">
+            <div class="row">
+              <div class="role">Graduate Researcher — University of Alberta</div>
+              <div class="meta">2024 — Present · Edmonton, AB</div>
+            </div>
+            <ul>
+              <li>Built a markerless balance assessment pipeline (OpenPose/MediaPipe/RTMpose) validated against Vicon & force plates.</li>
+              <li>Developed LSTM for COP prediction; reduced RMSE by ~35% over baseline.</li>
+              <li>Led 19‑camera Vicon + 8‑phone captures; 12+ participants across 32 tasks.</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="row"><div class="role">Teaching Assistant</div><div class="meta">2022 — 2025</div></div>
+            <ul><li>MECE 230/300, Intro to Robotics: lab instruction, grading, and 1:1 student support.</li></ul>
+          </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="card reveal">
+          <h2>Projects <span class="underline"></span></h2>
+          <div class="timeline">
+            <div class="tick">
+              <div class="dot"></div>
+              <div>
+                <div class="row"><div class="role">Markerless Balance Toolkit</div><div class="meta">Python, PyTorch, MMPose</div></div>
+                <ul>
+                  <li>Benchmarking 26+ pose models on COP/COM; automated stats & visualization.</li>
+                  <li><a href="#">GitHub repo</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="tick">
+              <div class="dot"></div>
+              <div>
+                <div class="row"><div class="role">HandyCam — Fine Motor Monitoring</div><div class="meta">Hackathon finalist · 2025</div></div>
+                <ul><li>Phone‑based tremor/dexterity tracking with privacy‑first pipeline.</li></ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PUBLICATIONS -->
+        <section id="publications" class="card reveal">
+          <h2>Publications & Talks <span class="underline"></span></h2>
+          <div class="item">
+            <div class="row"><div class="role">Standing balance from markerless video</div><div class="meta">AB BME Conf · Oct 2025</div></div>
+            <ul><li>3D markerless system for sway metrics; high agreement with ground‑truth COP.</li></ul>
+          </div>
+          <div class="gallery" aria-label="figure gallery">
+            <div class="shot"><img src="https://images.unsplash.com/photo-1520975661595-6453be3f7070?q=80&w=1200&auto=format&fit=crop" alt="Project shot"><div class="cap">Data collection setup</div></div>
+            <div class="shot"><img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Graph"><div class="cap">Model benchmarking</div></div>
+            <div class="shot"><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop" alt="Code"><div class="cap">Analysis pipeline</div></div>
+          </div>
+        </section>
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside>
+        <section class="card reveal">
+          <h2>Skills <span class="underline"></span></h2>
+          <div class="skillgrid">
+            <div class="skill">Python<div class="bar"><span data-w="92"></span></div></div>
+            <div class="skill">PyTorch<div class="bar"><span data-w="88"></span></div></div>
+            <div class="skill">Computer Vision<div class="bar"><span data-w="90"></span></div></div>
+            <div class="skill">Signal Processing<div class="bar"><span data-w="86"></span></div></div>
+            <div class="skill">Statistics<div class="bar"><span data-w="84"></span></div></div>
+            <div class="skill">Git/GitHub<div class="bar"><span data-w="88"></span></div></div>
+          </div>
+        </section>
+
+        <section class="card reveal">
+          <h2>Education <span class="underline"></span></h2>
+          <div class="item">
+            <div class="row"><div class="role">MSc, Mechanical Engineering</div><div class="meta">2024 — 2025</div></div>
+            <div class="meta">University of Alberta</div>
+          </div>
+          <div class="item">
+            <div class="row"><div class="role">BSc, Mechanical Engineering</div><div class="meta">—</div></div>
+            <div class="meta">—</div>
+          </div>
+        </section>
+
+        <section id="contact" class="card reveal">
+          <h2>Contact <span class="underline"></span></h2>
+          <div class="tags" style="margin-bottom:8px">
+            <span class="tag">Edmonton, AB</span>
+            <span class="tag">Open to internships & FT</span>
+          </div>
+          <p><a href="mailto:you@example.com">you@example.com</a><br/>
+          <a href="https://github.com/yourhandle">github.com/yourhandle</a><br/>
+          <a href="https://www.linkedin.com/in/yourhandle">linkedin.com/in/yourhandle</a></p>
+        </section>
+      </aside>
+    </div>
+
+    <div class="footer">© <span id="y"></span> Dorna Sabet · Built for GitHub Pages · Print to save as PDF</div>
+  </div>
+
+  <script>
+    // Theme toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if(saved){ document.documentElement.setAttribute('data-theme', saved); }
+    themeBtn.addEventListener('click', ()=>{
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Simple reveal on scroll
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+    },{threshold:0.12});
+    els.forEach(el=>io.observe(el));
+
+    // Animate skill bars after reveal using data-w attributes
+    const bars = document.querySelectorAll('.bar > span');
+    setTimeout(()=>{
+      bars.forEach(b=>{ const pct = b.getAttribute('data-w'); if(pct){ b.style.width = pct + '%'; } });
+    }, 400);
+
+    // Quick PDF: open print dialog
+    document.getElementById('downloadPdf').addEventListener('click', (e)=>{ e.preventDefault(); window.print(); });
+  </script>
+</body>
+</html>
