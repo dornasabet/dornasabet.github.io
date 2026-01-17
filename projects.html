@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dorna Sabet — Projects</title>
+  <meta name="description" content="Resume of Dorna Sabet — Computer Vision" />
+  <meta name="theme-color" content="#0d0f16" />
+  <meta property="og:title" content="Dorna Sabet — CV/AI" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Markerless motion capture, COP/COM estimation, and model benchmarking." />
+  <meta property="og:image" content="/og-cover.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#05060a;
+      --panel:#0d0f16;
+      --panel2:#0b0f1d;
+      --text:#e9ecf1;
+      --muted:#a8adbb;
+      --brand:#7bd6ff;
+      --chip:#121523;
+      --stroke:rgba(255,255,255,0.12);
+      --accent:#80ffea;
+      --link:#8ad8ff;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --grad: conic-gradient(from 180deg at 50% 50%, #7bd6ff, #80ffea, #b7a6ff, #7bd6ff);
+    }
+
+    [data-theme="light"]{
+      --bg:#f8fbff;
+      --panel:#ffffff;
+      --panel2:#f4f7ff;
+      --text:#0e1116;
+      --muted:#5b616e;
+      --brand:#0677ff;
+      --chip:#f1f5fb;
+      --stroke:rgba(0,0,0,0.08);
+      --link:#005ef0;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --grad: conic-gradient(from 180deg at 50% 50%, #0677ff, #00d0ff, #8b6cff, #0677ff);
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden
+    }
+
+    /* Fancy animated backdrop */
+    .bgfx{position:fixed; inset:0; pointer-events:none; z-index:-1}
+    .blob{position:absolute; filter:blur(70px); opacity:.35; mix-blend:screen; animation:float 18s ease-in-out infinite}
+    .b1{width:56vmax; height:56vmax; left:-10vmax; top:-10vmax; background:radial-gradient(circle at 30% 30%, #6cf 0, transparent 55%)}
+    .b2{width:54vmax; height:54vmax; right:-15vmax; top:10vmax; background:radial-gradient(circle at 70% 30%, #f0f 0, transparent 60%); animation-delay:-6s}
+    .b3{width:50vmax; height:50vmax; left:10vmax; bottom:-20vmax; background:radial-gradient(circle at 40% 60%, #0ff 0, transparent 60%); animation-delay:-12s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+    /* Layout */
+    .container{max-width:1200px; margin:32px auto 84px; padding:0 22px}
+    .nav{
+      position:sticky; top:0; z-index:40;
+      backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0));
+      border-bottom:1px solid var(--stroke)
+    }
+    .nav-inner{max-width:1200px; margin:0 auto; padding:10px 22px; display:flex; align-items:center; gap:14px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+    .badge{
+      font-family:"JetBrains Mono",monospace;
+      font-size:11px; padding:2px 8px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0))
+    }
+    .spacer{flex:1}
+    .nav a{color:var(--text); text-decoration:none; opacity:.85}
+    .nav a:hover{opacity:1}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:12px;
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0));
+      box-shadow:var(--shadow);
+      font-weight:600;
+      transition:transform .18s ease
+    }
+    .btn:hover{transform:translateY(-1px)}
+
+    /* Cards */
+    .card{position:relative; border-radius:22px; padding:28px; box-shadow:var(--shadow); overflow:hidden}
+    .card::before{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+      border:1px solid var(--stroke);
+      border-radius:inherit
+    }
+
+    h2{font-size:20px; margin:0 0 14px; letter-spacing:.3px; position:relative}
+    h2 .underline{position:absolute; left:0; bottom:-6px; height:3px; width:92px; background:linear-gradient(90deg,var(--brand),transparent); border-radius:3px}
+
+    .row{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .role{font-weight:700}
+    .meta{color:var(--muted); font-size:13px}
+    ul{margin:8px 0 0 20px}
+    li{margin-bottom:6px}
+
+    /* ✅ Experience layout — image at the END of each experience item */
+    .exp-wrap{display:block;}
+
+    .exp-media{
+      margin-top:14px;
+      max-width:620px;
+      border-radius:18px;
+      padding:0;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .exp-media.steel-section{
+      max-width:900px;
+    }
+    .exp-media.steel-section .exp-img{
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      display:block;
+    }
+    .exp-media.steel-section .exp-media-inner{
+      display:flex;
+      flex-direction:column;
+      gap:0;
+    }
+    .steel-img-wrapper{
+      border-bottom:1px solid var(--stroke);
+    }
+    .steel-img-wrapper:last-child{
+      border-bottom:none;
+    }
+    .exp-media-inner{
+      border-radius:17px;
+      overflow:hidden;
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0));
+    }
+    .exp-img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      display:block;
+      transform:scale(1.02);
+      filter:saturate(1.05) contrast(1.02);
+    }
+    .exp-video{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      display:block;
+    }
+    .exp-media.emotion-video{
+      max-width:450px;
+    }
+    .exp-media.emotion-video .exp-video{
+      width:100%;
+      height:auto;
+      max-height:600px;
+      object-fit:contain;
+    }
+    .exp-media.kinarm-video{
+      max-width:750px;
+    }
+    .exp-media.kinarm-video .exp-video{
+      width:100%;
+      height:auto;
+      max-height:400px;
+      object-fit:contain;
+    }
+    .exp-media.markerless-video{
+      max-width:850px;
+    }
+    .exp-media.markerless-video .exp-video{
+      width:100%;
+      height:auto;
+      max-height:480px;
+      object-fit:contain;
+    }
+    .exp-media.smartderm-video{
+      max-width:220px;
+    }
+    .exp-media.smartderm-video .exp-video{
+      width:100%;
+      height:auto;
+      aspect-ratio:1080 / 2340;
+      object-fit:contain;
+    }
+    .exp-media.yolo-video{
+      max-width:640px;
+    }
+    .exp-media.yolo-video .exp-video{
+      width:100%;
+      height:auto;
+      aspect-ratio:16/9;
+      object-fit:contain;
+    }
+    .exp-cap{
+      padding:10px 12px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.3;
+    }
+    @media (max-width: 860px){
+      .exp-media{max-width:100%}
+      .exp-img{height:180px}
+      .exp-video{height:180px}
+      .exp-media.steel-section .exp-img{height:auto}
+      .exp-media.emotion-video{max-width:100%}
+      .exp-media.emotion-video .exp-video{max-height:500px}
+      .exp-media.kinarm-video{max-width:100%}
+      .exp-media.kinarm-video .exp-video{max-height:350px}
+      .exp-media.markerless-video{max-width:100%}
+      .exp-media.markerless-video .exp-video{max-height:400px}
+      .exp-media.yolo-video{max-width:100%}
+      .exp-media.smartderm-video{max-width:100%}
+    }
+
+    /* Timeline */
+    .timeline{position:relative}
+    .timeline::before{content:""; position:absolute; left:10px; top:6px; bottom:6px; width:2px; background:linear-gradient(180deg,var(--brand),transparent)}
+    .tick{display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:start; margin-bottom:12px}
+    .tick .dot{width:10px; height:10px; margin-top:6px; border-radius:50%; background:var(--brand); box-shadow:0 0 0 4px rgba(123,214,255,.15)}
+
+    /* Footer */
+    .footer{margin-top:30px; text-align:center; color:var(--muted); font-size:12px}
+    a{color:var(--link); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Fade-up reveal */
+    .reveal{opacity:0; transform:translateY(8px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* Print */
+    @media print{
+      .nav,.bgfx{display:none}
+      .container{margin:0; padding:0}
+      .card{box-shadow:none; border:0}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org/","@type":"Person","name":"Dorna Sabet","jobTitle":"MSc Student — Mechanical Engineering","affiliation":{"@type":"CollegeOrUniversity","name":"University of Alberta"},"url":"https://dornasabet.github.io","sameAs":["https://github.com/dornasabet","https://www.linkedin.com/in/dorna-sabet-3249951b4/","https://www.youtube.com/@dornasabet"]}
+  </script>
+</head>
+<body>
+  <div class="bgfx"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand">Dorna Sabet <span class="badge">CV/AI</span></div>
+      <div class="spacer"></div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="videos.html">Videos</a>
+      <a href="contact.html">Contact</a>
+      <button id="themeToggle" class="btn" aria-label="Toggle theme">🌗</button>
+    </div>
+  </div>
+
+  <div class="container">
+      <main>
+        <!-- PROJECTS -->
+        <section id="projects" class="card reveal">
+          <h2>Projects <span class="underline"></span></h2>
+
+          <div class="timeline">
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row"><div class="role">Smart-Derm: Skin Lesion Detection System</div><div class="meta"></div></div>
+              <ul>
+                <li>Investigated CNN-based classification models for early identification of skin abnormalities.</li>
+                <li>Developed an Android mobile application integrating the trained models to enable on-device lesion detection and classification.</li>
+              </ul>
+            </div></div>
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row"><div class="role">KinArm Simulator Using YOLO</div><div class="meta"></div></div>
+              <ul>
+                <li>Built a low-cost KinArm robot simulator using YOLO object detection and OpenCV.</li>
+                <li>Created interactive rehabilitation-style games controlled with tracked hand movements.</li>
+              </ul>
+
+              <!-- Video for KinArm Simulator -->
+              <div class="exp-media kinarm-video">
+                <div class="exp-media-inner">
+                  <video class="exp-video" controls muted loop playsinline>
+                    <source src="ball_on_bar_opencv.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="exp-cap">KinArm Simulator Using YOLO</div>
+                </div>
+              </div>
+            </div></div>
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row">
+                <div class="role">Deep Vision Models for Automatic Emotion and Arousal Detection (BSc Thesis)</div>
+                <div class="meta"></div>
+              </div>
+              <ul>
+                <li>Implemented and evaluated convolutional neural networks (VGG, ResNet) for facial feature learning and affect/arousal prediction.</li>
+                <li>Applied GAN-based data augmentation to increase dataset diversity and improve model generalization under limited-data conditions.</li>
+              </ul>
+
+              <!-- Video for Deep Vision Models -->
+              <div class="exp-media emotion-video">
+                <div class="exp-media-inner">
+                  <video class="exp-video" controls muted loop playsinline>
+                    <source src="emotion.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="exp-cap">Deep Vision Models for Emotion and Arousal Detection</div>
+                </div>
+              </div>
+            </div></div>
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row"><div class="role">Deep-utils Python Library</div><div class="meta"></div></div>
+              <ul>
+                <li>Partnered on deep-utils, a Python library for deep learning research, with a focus on visualizing feature maps and intermediate representations during model training.</li>
+              </ul>
+            </div></div>
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row"><div class="role">Sleep Stage Classification Using EEG Signals with Neural Networks.</div><div class="meta"></div></div>
+              <ul>
+                <li>Analyzed deep learning models to classify four sleep stages from EEG signal.</li>
+                <li>Examined CNN-based and Transformer-based architectures for temporal feature extraction.</li>
+                <li>Performed signal preprocessing to assess classification performance across sleep stages.</li>
+              </ul>
+            </div></div>
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row"><div class="role">Steel Defect Segmentation</div><div class="meta"></div></div>
+              <ul>
+                <li>Compared the performance of U-Net and FCN-8 architectures for the segmentation of steel defects.</li>
+              </ul>
+
+              <!-- Images for Steel Defect Segmentation -->
+              <div class="exp-media steel-section">
+                <div class="exp-media-inner">
+                  <div class="steel-img-wrapper">
+                    <img class="exp-img" src="steel1.jpg" alt="Steel defect segmentation results">
+                  </div>
+                  <div class="steel-img-wrapper">
+                    <img class="exp-img" src="steel.png" alt="Steel defect segmentation results">
+                  </div>
+
+                  <div class="exp-cap">Steel defect segmentation results</div>
+                </div>
+              </div>
+            </div></div>
+
+            <!-- ✅ NEW PROJECT ADDED AT THE END -->
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row">
+                <div class="role">Helmet and bike detection using Yolo</div>
+                <div class="meta"></div>
+              </div>
+              <ul>
+                <li>Developed a program to detect people with or without helmet and detect bike and motors using
+                  YOLO-V4 and YOLO-V5 on TensorFlow and PyTorch trained from scratch.</li>
+              </ul>
+              <div class="exp-media yolo-video">
+                <div class="exp-media-inner">
+                  <video class="exp-video" controls muted loop playsinline preload="metadata">
+                    <!-- 🔁 replace with your filename -->
+                    <source src="hement nohelemt and motor bike detection using YOLO v5.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="exp-cap">Helmet and bike detection demo (YOLO)</div>
+                </div>
+              </div>
+            </div></div>
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row">
+                <div class="role">Rocket Game - C++ project using graphics</div>
+                <div class="meta"></div>
+              </div>
+              <ul>
+                <li>Developed a program to detect people with or without helmet and detect bike and motors using
+                  YOLO-V4 and YOLO-V5 on TensorFlow and PyTorch.</li>
+              </ul>
+              <div class="exp-media yolo-video">
+                <div class="exp-media-inner">
+                  <video class="exp-video" controls muted loop playsinline preload="metadata">
+                    <source src="mortar game.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="exp-cap">Helmet and bike detection demo (YOLO)</div>
+                </div>
+              </div>
+            </div></div>
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row">
+                <div class="role">Human activity recognition using RNNs</div>
+                <div class="meta"></div>
+              </div>
+              <ul>
+                <li>Built a program to detect detect 6 types of activities from video using RNNs.</li>
+              </ul>
+            </div></div>
+
+            <div class="tick"><div class="dot"></div><div>
+              <div class="row">
+                <div class="role">Retina disease classification using CNNs</div>
+                <div class="meta"></div>
+              </div>
+              <ul>
+                <li>Created a program to classify 4 states of retina with different Convolutional Neural Networks.</li>
+              </ul>
+            </div></div>
+
+          </div>
+        </section>
+      </main>
+
+      <div class="footer">© <span id="y"></span> Dorna Sabet · Built for GitHub Pages · Print to save as PDF</div>
+  </div>
+
+<script>
+    // Theme toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if(saved){ document.documentElement.setAttribute('data-theme', saved); }
+    themeBtn.addEventListener('click', ()=>{
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('show');
+          io.unobserve(e.target);
+        }
+      });
+    },{threshold:0.12});
+    els.forEach(el=>io.observe(el));
+
+    // Autoplay videos on viewport entry
+    const vids = document.querySelectorAll('video.exp-video');
+    if(vids.length){
+      const vio = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          const vid = entry.target;
+          if(entry.isIntersecting){
+            vid.play().catch(()=>{});
+          }else{
+            vid.pause();
+          }
+        });
+      },{threshold:0.5});
+      vids.forEach(v=>vio.observe(v));
+    }
+  </script>
+</body>
+</html>
